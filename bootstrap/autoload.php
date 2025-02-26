@@ -11,13 +11,6 @@
 
 declare(strict_types=1);
 
-if (!extension_loaded('phalcon')) {
-    throw new Exception(
-        "Phalcon extension isn't installed, follow these instructions to install it: " .
-        'https://docs.phalcon.io/en/latest/installation'
-    );
-}
-
 /**
  * @const DEVTOOLS_START_TIME The start time of the Devtools. Used for profiling.
  */
@@ -31,7 +24,7 @@ defined('DEVTOOLS_START_MEMORY') || define('DEVTOOLS_START_MEMORY', memory_get_u
 /**
  * @const PTOOLSPATH The path to the Phalcon Developers Tools.
  */
-defined('PTOOLSPATH') || define('PTOOLSPATH', rtrim(trim((string) getenv('PTOOLSPATH'), '\"\'') ?: dirname(dirname(__FILE__)), '\\/'));
+defined('PTOOLSPATH') || define('PTOOLSPATH', rtrim(trim((string)getenv('PTOOLSPATH'), '\"\'') ?: dirname(dirname(__FILE__)), '\\/'));
 
 /**
  * Check for old versions
@@ -55,7 +48,7 @@ defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 /**
  * @const TEMPLATE_PATH DevTools templates path.
  */
-defined('TEMPLATE_PATH') || define('TEMPLATE_PATH', PTOOLSPATH . DS .'templates');
+defined('TEMPLATE_PATH') || define('TEMPLATE_PATH', PTOOLSPATH . DS . 'templates');
 
 /**
  * @const ENV_PRODUCTION Application production stage.
@@ -106,6 +99,13 @@ foreach ($vendorAutoload as $file) {
 
 if (false === class_exists('Composer\Autoload\ClassLoader', false)) {
     throw new Exception('Please run composer install');
+}
+
+if (!class_exists('\\Phalcon\\Di\\Di')) {
+    throw new Exception(
+        "Phalcon isn't installed, follow these instructions to install it: " .
+        'https://docs.phalcon.io/en/latest/installation'
+    );
 }
 
 /**

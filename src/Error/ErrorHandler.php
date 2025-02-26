@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -13,7 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\DevTools\Error;
 
 use Phalcon\Di\Injectable;
-use Phalcon\Logger;
+use Phalcon\Logger\Enum;
+use Phalcon\Logger\Logger;
 
 class ErrorHandler extends Injectable
 {
@@ -46,7 +48,7 @@ class ErrorHandler extends Injectable
 
         $that = $this;
         set_exception_handler(
-            /** @var \Exception\Error $e */
+        /** @var \Exception\Error $e */
             function ($e) use ($that) {
                 $options = [
                     'type'        => $e->getCode(),
@@ -77,7 +79,7 @@ class ErrorHandler extends Injectable
     {
         $di = $this->getDI();
 
-        $type = $this->mapErrors($error->type());
+        $type    = $this->mapErrors($error->type());
         $message = "$type: {$error->message()} in {$error->file()} on line {$error->line()}";
 
         if ($di->has('logger')) {
@@ -112,6 +114,7 @@ class ErrorHandler extends Injectable
      * Maps error code to a string.
      *
      * @param int $code
+     *
      * @return mixed
      */
     public function mapErrors(int $code)
@@ -157,7 +160,8 @@ class ErrorHandler extends Injectable
     /**
      * Maps error code to a log type.
      *
-     * @param  int $code
+     * @param int $code
+     *
      * @return int
      */
     public function mapErrorsToLogType(int $code): int
@@ -169,22 +173,22 @@ class ErrorHandler extends Injectable
             case E_COMPILE_ERROR:
             case E_USER_ERROR:
             case E_PARSE:
-                return Logger::ERROR;
+                return Enum::ERROR;
             case E_WARNING:
             case E_USER_WARNING:
             case E_CORE_WARNING:
             case E_COMPILE_WARNING:
-                return Logger::WARNING;
+                return Enum::WARNING;
             case E_NOTICE:
             case E_USER_NOTICE:
-                return Logger::NOTICE;
+                return Enum::NOTICE;
             case E_STRICT:
             case E_DEPRECATED:
             case E_USER_DEPRECATED:
-                return Logger::INFO;
+                return Enum::INFO;
         }
 
-        return Logger::ERROR;
+        return Enum::ERROR;
     }
 
     public function customErrorHandler($errno, $errstr, $errfile, $errline)

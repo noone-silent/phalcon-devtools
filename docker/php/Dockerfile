@@ -1,35 +1,36 @@
-FROM phalconphp/build:debian-buster
+FROM debian:bookworm-slim
 
-LABEL description="Docker image to build Phalcon on Debian Buster" \
+LABEL description="Docker image to build Phalcon on Debian Bookworm" \
       maintainer="Serghei Iakovlev <serghei@phalconphp.com>" \
       vendor=Phalcon \
-      name="com.phalconphp.images.build.buster-7.4"
+      name="com.phalconphp.images.build.bookworm-8.2"
 
 ENV PATH=/root/composer/vendor/bin:/app/vendor/bin:/app/bin:/app:${PATH}
 
+# Installing composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 # Installing php and extentions
-RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list \
+RUN set -eux \
     && apt-get update \
     && apt-get install --no-install-recommends -yq \
         mc nano git wget curl zip unzip htop re2c \
-        php7.4-cli \
-        php7.4-fpm \
-        php7.4-dev \
-        php7.4-common \
-        php7.4-curl \
-        php7.4-gettext \
-        php7.4-intl \
-        php7.4-mbstring \
-        php7.4-mysqli \
-        php7.4-opcache \
-        php7.4-pdo_* \
-        php7.4-pgsql \
-        php7.4-shmop \
-        php7.4-xml \
-        php7.4-xml \
-        php7.4-zip \
-        php-pear \
+        php8.2-cli \
+        php8.2-fpm \
+        php8.2-dev \
+        php8.2-common \
+        php8.2-curl \
+        php8.2-gettext \
+        php8.2-intl \
+        php8.2-mbstring \
+        php8.2-mysqli \
+        php8.2-opcache \
+        php8.2-pdo_* \
+        php8.2-pgsql \
+        php8.2-shmop \
+        php8.2-xml \
+        php8.2-xml \
+        php8.2-zip \
     && apt-get autoremove -y \
     && apt-get autoclean -y \
     && apt-get clean -y \
@@ -38,30 +39,13 @@ RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
     && find /var/cache -type f -delete \
     && find /var/log -type f | while read f; do echo -n '' > ${f}; done
 
-# Updating and installing pecl exts
-RUN pecl update-channels
-RUN pecl install psr
-
-# Setting up phalcon
-ADD https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh /tmp
-RUN bash /tmp/script.deb.sh
-RUN apt-get install php7.4-phalcon
-
-# Installing composer
-RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
-    && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
-    && php /tmp/composer-setup.php \
-        --no-ansi \
-        --install-dir=/usr/local/bin \
-        --filename=composer
-
 # Editing www.conf
 RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
-    && sed -i -e "s/^;clear_env = no$/clear_env = no/" /etc/php/7.4/fpm/pool.d/www.conf \
-    && sed -i -e "/listen = .*/c\listen = [::]:8000" /etc/php/7.4/fpm/pool.d/www.conf
+    && sed -i -e "s/^;clear_env = no$/clear_env = no/" /etc/php/8.2/fpm/pool.d/www.conf \
+    && sed -i -e "/listen = .*/c\listen = 8000" /etc/php/8.2/fpm/pool.d/www.conf
 
 WORKDIR /app
 
 EXPOSE 8000
 
-CMD ["php-fpm7.4", "--nodaemonize", "--fpm-config=/etc/php/7.4/fpm/pool.d/www.conf"]
+CMD ["php-fpm8.2", "--nodaemonize", "--fpm-config=/etc/php/8.2/fpm/pool.d/www.conf"]
