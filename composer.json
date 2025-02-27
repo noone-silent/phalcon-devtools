@@ -38,6 +38,7 @@
         "nikic/php-parser": "^v5.4",
         "phalcon/phalcon": "v6.0.x-dev",
         "phalcon/migrations": "^3.0",
+        "phalcon/volt": "dev-master",
         "vlucas/phpdotenv": "^3.6|^4.0|^5.0"
     },
     "require-dev": {

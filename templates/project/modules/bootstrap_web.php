@@ -6,10 +6,28 @@ use Phalcon\Mvc\Application;
 
 error_reporting(E_ALL);
 
+define('DS', DIRECTORY_SEPARATOR);
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
 try {
+    /**
+     * Register the Composer autoloader (if any)
+     */
+    $vendorAutoload = [
+        __DIR__ . DS . '..' . DS . '..' . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+        __DIR__ . DS . '..' . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+        __DIR__ . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+        __DIR__ . DS . 'vendor' . DS . 'autoload.php',
+    ];
+
+    foreach ($vendorAutoload as $file) {
+        if (file_exists($file)) {
+            require $file;
+            break;
+        }
+    }
+
     /**
      * The FactoryDefault Dependency Injector automatically registers the services that
      * provide a full stack framework. These default services can be overidden with custom ones.

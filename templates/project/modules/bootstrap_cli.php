@@ -4,8 +4,26 @@ declare(strict_types=1);
 use Phalcon\Di\FactoryDefault\Cli as FactoryDefault;
 use Phalcon\Cli\Console as ConsoleApp;
 
+define('DS', DIRECTORY_SEPARATOR);
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
+
+/**
+ * Register the Composer autoloader (if any)
+ */
+$vendorAutoload = [
+    __DIR__ . DS . '..' . DS . '..' . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+    __DIR__ . DS . '..' . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+    __DIR__ . DS . '..' . DS . 'vendor' . DS . 'autoload.php',
+    __DIR__ . DS . 'vendor' . DS . 'autoload.php',
+];
+
+foreach ($vendorAutoload as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
 
 /**
  * The FactoryDefault Dependency Injector automatically registers the services that

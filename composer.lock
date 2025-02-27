@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e47e253a7acb5fe9348aee344ce66a64",
+    "content-hash": "d24450277388ff2494d13be611332936",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -756,6 +756,84 @@
                 }
             ],
             "time": "2025-02-11T15:46:57+00:00"
+        },
+        {
+            "name": "phalcon/volt",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phalcon/volt.git",
+                "reference": "4af1ba4fc984eb4b0bff3da003527af02b6a138c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/4af1ba4fc984eb4b0bff3da003527af02b6a138c",
+                "reference": "4af1ba4fc984eb4b0bff3da003527af02b6a138c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "pds/skeleton": "^1.0",
+                "phalcon/ide-stubs": "^5.8",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^10.5",
+                "squizlabs/php_codesniffer": "^3.10"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "resources/files/parser.php"
+                ],
+                "psr-4": {
+                    "Phalcon\\Volt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phalcon Team",
+                    "email": "team@phalcon.io",
+                    "homepage": "https://phalcon.io/en/team"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phalcon/volt/graphs/contributors"
+                }
+            ],
+            "description": "Phalcon Volt is a HTML template engine for sender-side rendering.",
+            "keywords": [
+                "engine",
+                "html",
+                "phalcon",
+                "template",
+                "volt"
+            ],
+            "support": {
+                "discussions": "https://phalcon.io/discussions/",
+                "docs": "https://phalcon.io/docs/",
+                "email": "support@phalcon.io",
+                "issues": "https://github.com/phalcon/volt/issues",
+                "rss": "https://blog.phalcon.io/rss",
+                "source": "https://github.com/phalcon/volt"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/phalcon",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/phalcon",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-01-27T08:57:54+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -4697,7 +4775,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phalcon/phalcon": 20
+        "phalcon/phalcon": 20,
+        "phalcon/volt": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
