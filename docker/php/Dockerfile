@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ARG PHP_VERSION=${PHP_VERSION:-7.4}
+ARG PHP_VERSION=${PHP_VERSION:-8.1}
 
 ENV PATH=/root/composer/vendor/bin:/app/vendor/bin:/app/bin:/app:${PATH} \
     PHP_VERSION=${PHP_VERSION}
